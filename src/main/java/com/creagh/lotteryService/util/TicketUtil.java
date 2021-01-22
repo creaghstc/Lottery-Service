@@ -53,19 +53,18 @@ public class TicketUtil {
     public TicketResponseDto entityToResponse(StandardTicket ticket) {
 
         TicketResponseDto ticketResponseDto = new TicketResponseDto();
-        ArrayList<LineResultDto> lineDtos = new ArrayList<>();
+        ArrayList<LineDto> lineDtos = new ArrayList<>();
 
         ticketResponseDto.setId(ticket.getId());
         ticketResponseDto.setStatus(ticket.getStatusChecked());
-        LineResultDto lineDto;
+        LineDto lineDto;
 
         for (StandardLine line : ticket.getLines()) {
 
-            lineDto = new LineResultDto(
+            lineDto = new LineDto(
                     line.getNumber_one(),
                     line.getNumber_two(),
-                    line.getNumber_three(),
-                    line.getResult()
+                    line.getNumber_three()
             );
 
             lineDtos.add(lineDto);

@@ -13,6 +13,6 @@ public class TicketResponseDto {
 
     private int id;
     private String status;
-    private List<LineResultDto> lines;
+    private List<LineDto> lines;
 
 }

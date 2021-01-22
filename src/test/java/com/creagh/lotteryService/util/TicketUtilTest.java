@@ -59,9 +59,8 @@ class TicketUtilTest {
         TicketResponseDto ticketResponseDto = ticketUtil.entityToResponse(standardTicket);
 
         //Then
-        LineResultDto lineResultDto = ticketResponseDto.getLines().get(0);
+        LineDto lineDto = ticketResponseDto.getLines().get(0);
 
-        assertEquals("", lineResultDto.getResult());
         assertFalse(ticketResponseDto.getLines().isEmpty());
     }
 
