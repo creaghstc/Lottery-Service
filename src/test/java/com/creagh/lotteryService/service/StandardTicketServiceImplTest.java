@@ -36,7 +36,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void getAllTickets() {
+    void getAllTicketsTest() {
 
         //Given
         //When
@@ -51,7 +51,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void createTicketNoLines() {
+    void createTicketNoLinesTest() {
 
         //Given
         lineDtoList.clear();
@@ -65,7 +65,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void createTicket() {
+    void createTicketTest() {
 
         //When
         ResponseEntity responseEntity = standardTicketService.createTicket(lineDtoList);
@@ -76,7 +76,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void updateTicket() {
+    void updateTicketTest() {
 
         //Given
         TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
@@ -97,7 +97,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void checkStatus() {
+    void checkStatusTest() {
 
         //Given
         //When
@@ -110,7 +110,7 @@ class StandardTicketServiceImplTest {
 
 
     @Test
-    void getTicket() {
+    void getTicketTest() {
 
         //Given
         //When

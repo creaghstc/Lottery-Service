@@ -36,7 +36,7 @@ class StandardTicketRepositoryTest {
     }
 
     @Test
-    void saveTicket() {
+    void saveTicketTest() {
         //Given
         StandardTicket newTicket = new StandardTicket();
         newTicket.setStatusChecked(TICKET_NOT_CHECKED);
@@ -49,7 +49,7 @@ class StandardTicketRepositoryTest {
     }
 
     @Test
-    void updateTicket() {
+    void updateTicketTest() {
 
         //Given
         StandardTicket resultTicket;
@@ -70,7 +70,7 @@ class StandardTicketRepositoryTest {
     }
 
     @Test
-    void findAllTickets() {
+    void findAllTicketsTest() {
 
         //Given
         standardTicketRepository.saveTicket(ticket);
@@ -85,7 +85,7 @@ class StandardTicketRepositoryTest {
     }
 
     @Test
-    void findTicketById() {
+    void findTicketByIdTest() {
 
         //GIven
         standardTicketRepository.saveTicket(ticket);
