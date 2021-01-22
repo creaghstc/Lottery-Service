@@ -1,7 +1,6 @@
 package com.creagh.lotteryService.service;
 
 import com.creagh.lotteryService.dto.LineDto;
-import com.creagh.lotteryService.dto.TicketRequestDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,15 +22,12 @@ class StandardTicketServiceImplTest {
     @Autowired
     TicketService standardTicketService;
 
-    TicketRequestDto ticketRequestDto;
     List<LineDto> lineDtoList = new ArrayList();
 
     private static final String INVALID_LINE_RESPONSE = "Invalid Ticket line in request";
 
     @BeforeEach
     void setUp() {
-
-        ticketRequestDto = new TicketRequestDto();
 
         LineDto lineDto = new LineDto(1, 0, 1);
         lineDtoList.add(lineDto);
@@ -42,12 +38,10 @@ class StandardTicketServiceImplTest {
     void getAllTickets() {
 
         //Given
-        ticketRequestDto.setLines(lineDtoList);
-
         //When
-        standardTicketService.createTicket(ticketRequestDto);
-        standardTicketService.createTicket(ticketRequestDto);
-        standardTicketService.createTicket(ticketRequestDto);
+        standardTicketService.createTicket(lineDtoList);
+        standardTicketService.createTicket(lineDtoList);
+        standardTicketService.createTicket(lineDtoList);
         List<TicketResponseDto> responseDtoList = (List<TicketResponseDto>) standardTicketService.getAllTickets().getBody();
 
         //Then
@@ -58,8 +52,11 @@ class StandardTicketServiceImplTest {
     @Test
     void createTicketNoLines() {
 
+        //Given
+        lineDtoList.clear();
+
         //When
-        ResponseEntity responseEntity = standardTicketService.createTicket(ticketRequestDto);
+        ResponseEntity responseEntity = standardTicketService.createTicket(lineDtoList);
 
         //Then
         assertNotNull(responseEntity);
@@ -69,11 +66,8 @@ class StandardTicketServiceImplTest {
     @Test
     void createTicket() {
 
-        //Given
-        ticketRequestDto.setLines(lineDtoList);
-
         //When
-        ResponseEntity responseEntity = standardTicketService.createTicket(ticketRequestDto);
+        ResponseEntity responseEntity = standardTicketService.createTicket(lineDtoList);
 
         //Then
         assertNotNull(responseEntity);
@@ -84,18 +78,16 @@ class StandardTicketServiceImplTest {
     void updateTicket() {
 
         //Given
-        ticketRequestDto.setLines(lineDtoList);
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(ticketRequestDto).getBody();
+        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
 
         int ticketId = createResponse.getId();
         lineDtoList.clear();
 
         LineDto newLine = new LineDto(1, 2, 1);
-        ticketRequestDto.setLines(lineDtoList);
         lineDtoList.add(newLine);
 
         //When
-        TicketResponseDto updatedResponse = (TicketResponseDto) standardTicketService.updateTicket(ticketId, ticketRequestDto).getBody();
+        TicketResponseDto updatedResponse = (TicketResponseDto) standardTicketService.updateTicket(ticketId, lineDtoList).getBody();
 
         //Then
         assertEquals(2, updatedResponse.getLines().size());
@@ -107,10 +99,8 @@ class StandardTicketServiceImplTest {
     void checkStatus() {
 
         //Given
-        ticketRequestDto.setLines(lineDtoList);
-
         //When
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(ticketRequestDto).getBody();
+        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
         TicketResponseDto responseDto = (TicketResponseDto) standardTicketService.checkStatus(createResponse.getId()).getBody();
 
         //Then
@@ -122,14 +112,12 @@ class StandardTicketServiceImplTest {
     void getTicket() {
 
         //Given
-        ticketRequestDto.setLines(lineDtoList);
-
         //When
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(ticketRequestDto).getBody();
+        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
         TicketResponseDto getResponse = (TicketResponseDto) standardTicketService.getTicket(createResponse.getId()).getBody();
 
         //Then
-        int expectedNumberOne = ticketRequestDto.getLines().get(0).getNumber_one();
+        int expectedNumberOne = lineDtoList.get(0).getNumber_one();
         int actualNumberOne = getResponse.getLines().get(0).getNumber_one();
 
         assertNotNull(getResponse);

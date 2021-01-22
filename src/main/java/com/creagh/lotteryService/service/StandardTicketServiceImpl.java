@@ -1,6 +1,6 @@
 package com.creagh.lotteryService.service;
 
-import com.creagh.lotteryService.dto.TicketRequestDto;
+import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
 import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
@@ -38,18 +38,18 @@ public class StandardTicketServiceImpl implements TicketService {
     /**
      * Method to create a new ticket with n rows.
      *
-     * @param ticketRequestDto
+     * @param lines
      * @return
      */
     @Override
-    public ResponseEntity createTicket(TicketRequestDto ticketRequestDto) {
+    public ResponseEntity createTicket(List<LineDto> lines) {
 
-        if (validationUtil.validateLines(ticketRequestDto.getLines())) {
+        if (validationUtil.validateLines(lines)) {
             StandardTicket standardTicket = new StandardTicket();
             standardTicket.setStatusChecked(TICKET_NOT_CHECKED);
 
             standardTicket = standardTicketRepository.saveTicket(standardTicket);
-            standardTicket.setLines(ticketUtil.lineDtoToEntity(ticketRequestDto.getLines(), standardTicket));
+            standardTicket.setLines(ticketUtil.lineDtoToEntity(lines, standardTicket));
             standardTicketRepository.updateTicket(standardTicket);
 
             logger.info("Created new Standard ticket with ID: {}", standardTicket.getId());
@@ -64,11 +64,11 @@ public class StandardTicketServiceImpl implements TicketService {
      * Method to amend n rows to a given ticket.
      *
      * @param id
-     * @param ticketRequestDto
+     * @param lines
      * @return
      */
     @Override
-    public ResponseEntity updateTicket(int id, TicketRequestDto ticketRequestDto) {
+    public ResponseEntity updateTicket(int id, List<LineDto> lines) {
 
         StandardTicket standardTicket = standardTicketRepository.findTicketById(id);
 
@@ -78,9 +78,9 @@ public class StandardTicketServiceImpl implements TicketService {
                 ArrayList<StandardLine> totalLines = new ArrayList<>();
                 totalLines.addAll((standardTicket.getLines()));
 
-                if (validationUtil.validateLines(ticketRequestDto.getLines())) {
+                if (validationUtil.validateLines(lines)) {
 
-                    totalLines.addAll(ticketUtil.lineDtoToEntity(ticketRequestDto.getLines(), standardTicket));
+                    totalLines.addAll(ticketUtil.lineDtoToEntity(lines, standardTicket));
                     standardTicket.setLines(totalLines);
                     standardTicketRepository.updateTicket(standardTicket);
                     logger.info("Successfully updated ticket {}", id);

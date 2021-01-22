@@ -1,6 +1,6 @@
 package com.creagh.lotteryService.controller;
 
-import com.creagh.lotteryService.dto.TicketRequestDto;
+import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
 import com.creagh.lotteryService.service.TicketService;
 import io.swagger.annotations.ApiOperation;
@@ -19,8 +19,8 @@ public class LotteryController {
 
     @PostMapping("/ticket")
     @ApiOperation(value = "Create a new standard ticket.", tags = STANDARD_TICKET_TAG)
-    public ResponseEntity<TicketResponseDto> createNewTicket(@RequestBody TicketRequestDto newTicketRequestDto) {
-        return standardTicketService.createTicket(newTicketRequestDto);
+    public ResponseEntity<TicketResponseDto> createNewTicket(@RequestBody List<LineDto> lines) {
+        return standardTicketService.createTicket(lines);
     }
 
     @GetMapping("/ticket")
@@ -37,8 +37,8 @@ public class LotteryController {
 
     @PutMapping("/ticket/{id}")
     @ApiOperation(value = "Amend a ticket with new lines", tags = STANDARD_TICKET_TAG)
-    public ResponseEntity<TicketResponseDto> updateTicket(@RequestParam int id, @RequestBody TicketRequestDto ticketRequestDto) {
-        return standardTicketService.updateTicket(id, ticketRequestDto);
+    public ResponseEntity<TicketResponseDto> updateTicket(@RequestParam int id, @RequestBody List<LineDto> lines) {
+        return standardTicketService.updateTicket(id, lines);
     }
 
     @PutMapping("/ticket/status/{id}")
