@@ -20,7 +20,7 @@ class ValidationUtilTest {
     ValidationUtil validationUtil;
 
     @Test
-    void validateLines() {
+    void validateLinesTest() {
 
         //Given
         LineDto validLine = new LineDto(1,1,2);

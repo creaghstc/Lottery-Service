@@ -3,11 +3,13 @@ package com.creagh.lotteryService.util;
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.LineResultDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.creagh.lotteryService.constants.StandardTicketConstants.*;
@@ -98,8 +100,58 @@ public class TicketUtil {
 
     }
 
+    /**
+     * Converts entity to a final response object which has the lines grouped by outcome.
+     * @param ticket
+     * @return
+     */
+    public TicketResultResponseDto entityToResultResponseDto(StandardTicket ticket) {
+        TicketResultResponseDto ticketResultResponseDto = new TicketResultResponseDto();
+        ArrayList<LineResultDto> lineDtos = new ArrayList<>();
+
+        ticketResultResponseDto.setId(ticket.getId());
+        ticketResultResponseDto.setStatus(ticket.getStatusChecked());
+        LineResultDto lineDto;
+
+        for (StandardLine line : ticket.getLines()) {
+
+            lineDto = new LineResultDto(
+                    line.getNumber_one(),
+                    line.getNumber_two(),
+                    line.getNumber_three(),
+                    line.getResult()
+            );
+
+            lineDtos.add(lineDto);
+        }
+
+        addLinesToGroups(lineDtos, ticketResultResponseDto);
+
+        return ticketResultResponseDto;
+    }
+
     private boolean areEqual(int numberOne, int numberTwo, int numberThree) {
         return numberOne == numberTwo && numberTwo == numberThree;
+    }
+
+    /**
+     * Adds lines to the outcome groups
+     * @param lineResultDtos
+     * @param ticketResultResponseDto
+     */
+    private void addLinesToGroups(List<LineResultDto> lineResultDtos, TicketResultResponseDto ticketResultResponseDto) {
+
+        for (LineResultDto line : lineResultDtos) {
+            if (line.getResult().equals(RESULT_TEN)) {
+                ticketResultResponseDto.getResultTenGroup().add(line);
+            } else if (line.getResult().equals(RESULT_FIVE)) {
+                ticketResultResponseDto.getResultFiveGroup().add(line);
+            } else if (line.getResult().equals(RESULT_ONE)) {
+                ticketResultResponseDto.getResultOneGroup().add(line);
+            } else if (line.getResult().equals(RESULT_ZERO)) {
+                ticketResultResponseDto.getResultZeroGroup().add(line);
+            }
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package com.creagh.lotteryService.util;
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.LineResultDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.creagh.lotteryService.constants.StandardTicketConstants.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test.properties")
@@ -25,7 +25,7 @@ class TicketUtilTest {
     TicketUtil ticketUtil;
 
     @Test
-    void lineDtoToEntity() {
+    void lineDtoToEntityTest() {
 
         //Given
         LineDto lineDto = new LineDto(1, 2, 2);
@@ -44,7 +44,7 @@ class TicketUtilTest {
     }
 
     @Test
-    void entityToResponse() {
+    void entityToResponseTest() {
 
         //Given
         List<StandardLine> standardLines = new ArrayList();
@@ -66,7 +66,7 @@ class TicketUtilTest {
     }
 
     @Test
-    void calculateTicketResults() {
+    void calculateTicketResultsTest() {
 
         //Given
         List<StandardLine> standardLines = new ArrayList();
@@ -89,5 +89,25 @@ class TicketUtilTest {
         assertEquals(RESULT_FIVE, standardLines.get(1).getResult());
         assertEquals(RESULT_TEN, standardLines.get(2).getResult());
         assertEquals(RESULT_ZERO, standardLines.get(3).getResult());
+    }
+
+    @Test
+    void entityToResultResponseDtoTest() {
+
+        //Given
+        List<StandardLine> standardLines = new ArrayList();
+        StandardTicket standardTicket = new StandardTicket();
+        standardTicket.setId(2);
+        StandardLine line = new StandardLine(1, 2, 2);
+        line.setTicket(standardTicket);
+        standardLines.add(line);
+        standardTicket.setLines(ticketUtil.calculateTicketResults(standardLines));
+
+        //When
+        TicketResultResponseDto ticketResultResponseDto = ticketUtil.entityToResultResponseDto(standardTicket);
+
+        //Then
+        assertFalse(ticketResultResponseDto.getResultOneGroup().isEmpty());
+        assertTrue(ticketResultResponseDto.getResultTenGroup().isEmpty());
     }
 }

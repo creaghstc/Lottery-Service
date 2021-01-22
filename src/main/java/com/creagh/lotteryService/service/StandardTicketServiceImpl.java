@@ -2,6 +2,7 @@ package com.creagh.lotteryService.service;
 
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
 import com.creagh.lotteryService.repository.TicketRepository;
@@ -120,8 +121,7 @@ public class StandardTicketServiceImpl implements TicketService {
             standardTicket.setStatusChecked(TICKET_CHECKED);
             standardTicketRepository.updateTicket(standardTicket);
 
-            TicketResponseDto response = ticketUtil.entityToResponse(standardTicket);
-            Collections.sort(response.getLines());
+            TicketResultResponseDto response = ticketUtil.entityToResultResponseDto(standardTicket);
 
             logger.info("Returning checked ticket results {}", id);
             return ResponseEntity.ok(response);
@@ -166,8 +166,13 @@ public class StandardTicketServiceImpl implements TicketService {
         StandardTicket standardTicket = standardTicketRepository.findTicketById(id);
 
         if (null != standardTicket) {
-            logger.info("Returning ticket {}", id);
-            return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
+            if (standardTicket.getStatusChecked().equals(TICKET_CHECKED)){
+                logger.info("Returning final ticket {}", id);
+                return ResponseEntity.ok(ticketUtil.entityToResultResponseDto(standardTicket));
+            } else {
+                logger.info("Returning ticket {}", id);
+                return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
+            }
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
             return ResponseEntity.badRequest().body(UNABLE_TO_FIND_TICKET_WITH_ID + id);

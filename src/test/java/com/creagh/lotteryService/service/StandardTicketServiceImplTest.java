@@ -2,6 +2,7 @@ package com.creagh.lotteryService.service;
 
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,10 +102,10 @@ class StandardTicketServiceImplTest {
         //Given
         //When
         TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
-        TicketResponseDto responseDto = (TicketResponseDto) standardTicketService.checkStatus(createResponse.getId()).getBody();
+        TicketResultResponseDto responseDto = (TicketResultResponseDto) standardTicketService.checkStatus(createResponse.getId()).getBody();
 
         //Then
-        assertEquals(RESULT_TEN, responseDto.getLines().get(0).getResult());
+        assertFalse(responseDto.getResultTenGroup().isEmpty());
     }
 
 

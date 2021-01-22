@@ -14,7 +14,7 @@ public interface TicketService {
 
     ResponseEntity<TicketResponseDto> updateTicket(int id, List<LineDto> lines);
 
-    ResponseEntity<TicketResponseDto> checkStatus(int id);
+    ResponseEntity checkStatus(int id);
 
     ResponseEntity<List<TicketResponseDto>>getAllTickets();
 }
