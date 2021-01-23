@@ -16,5 +16,4 @@ public class TicketResultResponseDto {
     List<LineResultDto> resultGroup5 = new ArrayList<>();
     List<LineResultDto> resultGroup1 = new ArrayList<>();
     List<LineResultDto> resultGroup0 = new ArrayList<>();
-
 }

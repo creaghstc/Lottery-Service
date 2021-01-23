@@ -28,7 +28,6 @@ public class StandardTicketRepository implements TicketRepository {
         entityManager = emf.createEntityManager();
 
         entityManager.getTransaction().begin();
-
         entityManager.persist(ticketRequestDto);
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -47,7 +46,6 @@ public class StandardTicketRepository implements TicketRepository {
         entityManager = emf.createEntityManager();
 
         entityManager.getTransaction().begin();
-
         entityManager.merge(standardTicket);
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -66,7 +64,6 @@ public class StandardTicketRepository implements TicketRepository {
         entityManager = emf.createEntityManager();
 
         entityManager.getTransaction().begin();
-
         List<StandardTicket> result = entityManager.createQuery("SELECT a FROM StandardTicket a").getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -86,7 +83,6 @@ public class StandardTicketRepository implements TicketRepository {
         entityManager = emf.createEntityManager();
 
         entityManager.getTransaction().begin();
-
         StandardTicket standardTicket = entityManager.find(StandardTicket.class, id);
         entityManager.getTransaction().commit();
         entityManager.close();

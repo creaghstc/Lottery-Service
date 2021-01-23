@@ -14,5 +14,4 @@ public class TicketResponseDto {
     private int id;
     private String status;
     private List<LineDto> lines;
-
 }

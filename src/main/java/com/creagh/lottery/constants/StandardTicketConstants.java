@@ -21,5 +21,4 @@ public class StandardTicketConstants {
     public static final String RESULT_ZERO = "0";
 
     public static final Random numberGenerator = new Random();
-
 }

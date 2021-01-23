@@ -17,11 +17,9 @@ public class StandardLine {
     @GeneratedValue
     @Column(name = "ID")
     private int id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TICKET_ID")
     private StandardTicket ticket;
-
     @Column(name = "NUMBER_ONE")
     private int numberOne;
     @Column(name = "NUMBER_TWO")

@@ -71,9 +71,7 @@ public class StandardTicketServiceImpl implements TicketService {
     public ResponseEntity createRandomTicket(int numberOfLines) {
 
         List<LineDto> generatedLines;
-
         generatedLines = ticketUtil.generateRandomTicket(numberOfLines);
-
         return createTicket(generatedLines);
     }
 
@@ -102,7 +100,6 @@ public class StandardTicketServiceImpl implements TicketService {
                     standardTicketRepository.updateTicket(standardTicket);
                     logger.info("Successfully updated ticket {}", id);
                     return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
-
                 } else {
                     logger.info("Tried to update ticket {}, with invalid line.", id);
                     return ResponseEntity.badRequest().body(INVALID_TICKET_LINE_IN_REQUEST);
@@ -110,14 +107,11 @@ public class StandardTicketServiceImpl implements TicketService {
             } else {
                 logger.info("Tried to amend ticket, {}, which has alread been checked", id);
                 return ResponseEntity.badRequest().body("Unable to update a ticket which has been checked");
-
             }
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
             return ResponseEntity.notFound().build();
         }
-
-
     }
 
     /**
@@ -169,7 +163,6 @@ public class StandardTicketServiceImpl implements TicketService {
             return ResponseEntity.notFound().build();
 
         }
-
     }
 
     /**
@@ -212,7 +205,6 @@ public class StandardTicketServiceImpl implements TicketService {
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
             return ResponseEntity.notFound().build();
-
         }
     }
 }

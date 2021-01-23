@@ -67,7 +67,6 @@ public class TicketUtil {
                     line.getNumberTwo(),
                     line.getNumberThree()
             );
-
             lineDtos.add(lineDto);
         }
 
@@ -97,7 +96,6 @@ public class TicketUtil {
         }
 
         return lines;
-
     }
 
     /**
@@ -127,7 +125,6 @@ public class TicketUtil {
         }
 
         addLinesToGroups(lineDtos, ticketResultResponseDto);
-
         return ticketResultResponseDto;
     }
 
@@ -170,7 +167,6 @@ public class TicketUtil {
 
             generatedLines.add(newLine);
         }
-
 
         return generatedLines;
     }

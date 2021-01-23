@@ -14,5 +14,4 @@ public class LineDto {
     private int numberOne;
     private int numberTwo;
     private int numberThree;
-
 }

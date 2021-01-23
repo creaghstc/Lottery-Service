@@ -148,9 +148,7 @@ class StandardTicketServiceImplTest {
 
         //Given
         TicketResponseDto createResponse = standardTicketService.createRandomTicket(3).getBody();
-
         int ticketId = createResponse.getId();
-
 
         //When
         TicketResponseDto updatedResponse = standardTicketService.updateTicketWithRandomLines(ticketId, 2).getBody();
