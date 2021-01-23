@@ -11,9 +11,11 @@ import com.creagh.lotteryService.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,6 @@ import static com.creagh.lotteryService.constants.StandardTicketConstants.TICKET
 public class StandardTicketServiceImpl implements TicketService {
 
     public static final String INVALID_TICKET_LINE_IN_REQUEST = "Invalid Ticket line in request";
-    public static final String UNABLE_TO_FIND_TICKET_WITH_ID = "Unable to find ticket with ID: ";
     public static final String COULD_NOT_FIND_TICKET_WITH_ID_LOG = "Could not find ticket with ID: {}";
     private static Logger logger = LoggerFactory.getLogger(StandardTicketServiceImpl.class);
 
@@ -53,7 +54,8 @@ public class StandardTicketServiceImpl implements TicketService {
             standardTicketRepository.updateTicket(standardTicket);
 
             logger.info("Created new Standard ticket with ID: {}", standardTicket.getId());
-            return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
+            URI createdUri = URI.create("/ticket/" + standardTicket.getId());
+            return ResponseEntity.created(createdUri).body(ticketUtil.entityToResponse(standardTicket));
         } else {
             logger.info("Invalid line found for create ticket request.");
             return ResponseEntity.badRequest().body(INVALID_TICKET_LINE_IN_REQUEST);
@@ -67,7 +69,7 @@ public class StandardTicketServiceImpl implements TicketService {
      * @return
      */
     @Override
-    public ResponseEntity<TicketResponseDto> createRandomTicket(int numberOfLines) {
+    public ResponseEntity createRandomTicket(int numberOfLines) {
 
         List<LineDto> generatedLines;
 
@@ -113,7 +115,7 @@ public class StandardTicketServiceImpl implements TicketService {
             }
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
-            return ResponseEntity.badRequest().body(UNABLE_TO_FIND_TICKET_WITH_ID + id);
+            return ResponseEntity.notFound().build();
         }
 
 
@@ -127,7 +129,7 @@ public class StandardTicketServiceImpl implements TicketService {
      * @return
      */
     @Override
-    public ResponseEntity<TicketResponseDto> updateTicketWithRandomLines(int id, int numberOfLines) {
+    public ResponseEntity updateTicketWithRandomLines(int id, int numberOfLines) {
         List<LineDto> generatedLines;
 
         generatedLines = ticketUtil.generateRandomTicket(numberOfLines);
@@ -165,8 +167,10 @@ public class StandardTicketServiceImpl implements TicketService {
 
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
-            return ResponseEntity.badRequest().body(UNABLE_TO_FIND_TICKET_WITH_ID + id);
+            return ResponseEntity.notFound().build();
+
         }
+
     }
 
     /**
@@ -208,7 +212,8 @@ public class StandardTicketServiceImpl implements TicketService {
 
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
-            return ResponseEntity.badRequest().body(UNABLE_TO_FIND_TICKET_WITH_ID + id);
+            return ResponseEntity.notFound().build();
+
         }
     }
 }

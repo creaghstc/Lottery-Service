@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
@@ -73,6 +74,7 @@ class StandardTicketServiceImplTest {
         //Then
         assertNotNull(responseEntity);
         assertEquals(TicketResponseDto.class, responseEntity.getBody().getClass());
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
 
     @Test
@@ -117,6 +119,8 @@ class StandardTicketServiceImplTest {
         //When
         TicketResponseDto createResponse = standardTicketService.createTicket(lineDtoList).getBody();
         TicketResponseDto getResponse = standardTicketService.getTicket(createResponse.getId()).getBody();
+        ResponseEntity getResponseNotFound = standardTicketService.getTicket(24);
+
 
         //Then
         int expectedNumberOne = lineDtoList.get(0).getNumber_one();
@@ -124,6 +128,7 @@ class StandardTicketServiceImplTest {
 
         assertNotNull(getResponse);
         assertEquals(expectedNumberOne, actualNumberOne);
+        assertEquals(HttpStatus.NOT_FOUND, getResponseNotFound.getStatusCode());
     }
 
     @Test
