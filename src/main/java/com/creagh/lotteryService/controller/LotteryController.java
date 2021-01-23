@@ -23,6 +23,12 @@ public class LotteryController {
         return standardTicketService.createTicket(lines);
     }
 
+    @PostMapping("/ticket/random")
+    @ApiOperation(value = "Create a new random standard ticket.", tags = STANDARD_TICKET_TAG)
+    public ResponseEntity<TicketResponseDto> createNewRandomTicket(@RequestBody int numberOfLines) {
+        return standardTicketService.createRandomTicket(numberOfLines);
+    }
+
     @GetMapping("/ticket")
     @ApiOperation(value = "Return a list of all available tickets.", tags = STANDARD_TICKET_TAG)
     public ResponseEntity<List<TicketResponseDto>> getTickets() {
@@ -39,6 +45,12 @@ public class LotteryController {
     @ApiOperation(value = "Amend a ticket with new lines", tags = STANDARD_TICKET_TAG)
     public ResponseEntity<TicketResponseDto> updateTicket(@RequestParam int id, @RequestBody List<LineDto> lines) {
         return standardTicketService.updateTicket(id, lines);
+    }
+
+    @PutMapping("/ticket/random/{id}")
+    @ApiOperation(value = "Amend a ticket with new random lines", tags = STANDARD_TICKET_TAG)
+    public ResponseEntity<TicketResponseDto> updateTicket(@RequestParam int id, @RequestBody int numberOflines) {
+        return standardTicketService.updateTicketWithRandomLines(id, numberOflines);
     }
 
     @PutMapping("/ticket/status/{id}")

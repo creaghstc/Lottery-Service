@@ -3,6 +3,7 @@ package com.creagh.lotteryService.service;
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
 import com.creagh.lotteryService.dto.TicketResultResponseDto;
+import com.creagh.lotteryService.entity.StandardTicket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +124,33 @@ class StandardTicketServiceImplTest {
 
         assertNotNull(getResponse);
         assertEquals(expectedNumberOne, actualNumberOne);
+    }
+
+    @Test
+    void createRandomTicketTest(){
+        //Given
+        int numberOfLines = 5;
+
+        //When
+        TicketResponseDto ticketResponseDto = standardTicketService.createRandomTicket(numberOfLines).getBody();
+
+        //Then
+        assertEquals(numberOfLines, ticketResponseDto.getLines().size());
+    }
+
+    @Test
+    void updateTicketWithRandomLinesTest(){
+
+        //Given
+        TicketResponseDto createResponse = standardTicketService.createRandomTicket(3).getBody();
+
+        int ticketId = createResponse.getId();
+
+
+        //When
+        TicketResponseDto updatedResponse = standardTicketService.updateTicketWithRandomLines(ticketId, 2).getBody();
+
+        //Then
+        assertEquals(5, updatedResponse.getLines().size());
     }
 }

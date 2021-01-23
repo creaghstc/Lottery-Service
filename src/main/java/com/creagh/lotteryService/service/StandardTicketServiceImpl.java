@@ -62,6 +62,21 @@ public class StandardTicketServiceImpl implements TicketService {
     }
 
     /**
+     * Method to create a new ticket of {@code numberOfLines} lenght
+     * @param numberOfLines
+     * @return
+     */
+    @Override
+    public ResponseEntity<TicketResponseDto> createRandomTicket(int numberOfLines) {
+
+        List<LineDto> generatedLines;
+
+        generatedLines = ticketUtil.generateRandomTicket(numberOfLines);
+
+        return createTicket(generatedLines);
+    }
+
+    /**
      * Method to amend n rows to a given ticket.
      *
      * @param id
@@ -103,6 +118,20 @@ public class StandardTicketServiceImpl implements TicketService {
 
 
     }
+
+    /**
+     * Method to update a given ticket with {@code numberOfLines} new random lines.
+     * @param id
+     * @param numberOfLines
+     * @return
+     */
+    @Override
+    public ResponseEntity<TicketResponseDto> updateTicketWithRandomLines(int id, int numberOfLines) {
+        List<LineDto> generatedLines;
+
+        generatedLines = ticketUtil.generateRandomTicket(numberOfLines);
+
+        return updateTicket(id, generatedLines);    }
 
     /**
      * Method to check the results of a given ticket id.

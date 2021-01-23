@@ -8,14 +8,18 @@ import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
 import org.springframework.stereotype.Component;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static com.creagh.lotteryService.constants.StandardTicketConstants.*;
 
 @Component
 public class TicketUtil {
+
+    public static final int UPPER_BOUND = 3;
 
     /**
      * Convert a list of lineDtos to entities ready to be saved to db.
@@ -151,6 +155,26 @@ public class TicketUtil {
                 ticketResultResponseDto.getResultZeroGroup().add(line);
             }
         }
+    }
+
+    public List<LineDto> generateRandomTicket(int numberOfLines){
+
+        LineDto newLine;
+        List<LineDto> generatedLines = new ArrayList<>();
+
+        Random numberGenerator = new Random();
+
+        while (generatedLines.size() < numberOfLines){
+            newLine = new LineDto();
+            newLine.setNumber_one(numberGenerator.nextInt(UPPER_BOUND));
+            newLine.setNumber_two(numberGenerator.nextInt(UPPER_BOUND));
+            newLine.setNumber_three(numberGenerator.nextInt(UPPER_BOUND));
+
+            generatedLines.add(newLine);
+        }
+
+
+        return generatedLines;
     }
 
 }
