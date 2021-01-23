@@ -2,6 +2,7 @@ package com.creagh.lotteryService.controller;
 
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import com.creagh.lotteryService.service.TicketService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class LotteryController {
 
     @PutMapping("/ticket/status/{id}")
     @ApiOperation(value = "Check the result of ticket", tags = STANDARD_TICKET_TAG)
-    public ResponseEntity<TicketResponseDto> checkTicketStatus(@RequestParam int id) {
+    public ResponseEntity<TicketResultResponseDto> checkTicketStatus(@RequestParam int id) {
         return standardTicketService.checkStatus(id);
     }
 }

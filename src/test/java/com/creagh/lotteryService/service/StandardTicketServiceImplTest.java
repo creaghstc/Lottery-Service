@@ -3,7 +3,6 @@ package com.creagh.lotteryService.service;
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
 import com.creagh.lotteryService.dto.TicketResultResponseDto;
-import com.creagh.lotteryService.entity.StandardTicket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,10 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.creagh.lotteryService.constants.StandardTicketConstants.RESULT_TEN;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@TestPropertySource(locations="classpath:test.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class StandardTicketServiceImplTest {
 
     @Autowired
@@ -40,11 +38,12 @@ class StandardTicketServiceImplTest {
     void getAllTicketsTest() {
 
         //Given
+        standardTicketService.createTicket(lineDtoList);
+        standardTicketService.createTicket(lineDtoList);
+        standardTicketService.createTicket(lineDtoList);
+
         //When
-        standardTicketService.createTicket(lineDtoList);
-        standardTicketService.createTicket(lineDtoList);
-        standardTicketService.createTicket(lineDtoList);
-        List<TicketResponseDto> responseDtoList = (List<TicketResponseDto>) standardTicketService.getAllTickets().getBody();
+        List<TicketResponseDto> responseDtoList = standardTicketService.getAllTickets().getBody();
 
         //Then
         assertTrue(responseDtoList.size() >= 3);
@@ -80,7 +79,7 @@ class StandardTicketServiceImplTest {
     void updateTicketTest() {
 
         //Given
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
+        TicketResponseDto createResponse = standardTicketService.createTicket(lineDtoList).getBody();
 
         int ticketId = createResponse.getId();
         lineDtoList.clear();
@@ -89,7 +88,7 @@ class StandardTicketServiceImplTest {
         lineDtoList.add(newLine);
 
         //When
-        TicketResponseDto updatedResponse = (TicketResponseDto) standardTicketService.updateTicket(ticketId, lineDtoList).getBody();
+        TicketResponseDto updatedResponse = standardTicketService.updateTicket(ticketId, lineDtoList).getBody();
 
         //Then
         assertEquals(2, updatedResponse.getLines().size());
@@ -101,9 +100,10 @@ class StandardTicketServiceImplTest {
     void checkStatusTest() {
 
         //Given
+        TicketResponseDto createResponse = standardTicketService.createTicket(lineDtoList).getBody();
+
         //When
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
-        TicketResultResponseDto responseDto = (TicketResultResponseDto) standardTicketService.checkStatus(createResponse.getId()).getBody();
+        TicketResultResponseDto responseDto = standardTicketService.checkStatus(createResponse.getId()).getBody();
 
         //Then
         assertFalse(responseDto.getResultTenGroup().isEmpty());
@@ -115,8 +115,8 @@ class StandardTicketServiceImplTest {
 
         //Given
         //When
-        TicketResponseDto createResponse = (TicketResponseDto) standardTicketService.createTicket(lineDtoList).getBody();
-        TicketResponseDto getResponse = (TicketResponseDto) standardTicketService.getTicket(createResponse.getId()).getBody();
+        TicketResponseDto createResponse = standardTicketService.createTicket(lineDtoList).getBody();
+        TicketResponseDto getResponse = standardTicketService.getTicket(createResponse.getId()).getBody();
 
         //Then
         int expectedNumberOne = lineDtoList.get(0).getNumber_one();
@@ -127,7 +127,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void createRandomTicketTest(){
+    void createRandomTicketTest() {
         //Given
         int numberOfLines = 5;
 
@@ -139,7 +139,7 @@ class StandardTicketServiceImplTest {
     }
 
     @Test
-    void updateTicketWithRandomLinesTest(){
+    void updateTicketWithRandomLinesTest() {
 
         //Given
         TicketResponseDto createResponse = standardTicketService.createRandomTicket(3).getBody();

@@ -2,6 +2,7 @@ package com.creagh.lotteryService.service;
 
 import com.creagh.lotteryService.dto.LineDto;
 import com.creagh.lotteryService.dto.TicketResponseDto;
+import com.creagh.lotteryService.dto.TicketResultResponseDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface TicketService {
 
     ResponseEntity<TicketResponseDto> updateTicketWithRandomLines(int id, int numberOfLines);
 
-    ResponseEntity checkStatus(int id);
+    ResponseEntity<TicketResultResponseDto> checkStatus(int id);
 
     ResponseEntity<List<TicketResponseDto>>getAllTickets();
 }
