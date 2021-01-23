@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.creagh.lotteryService.constants.StandardTicketConstants.TICKET_CHECKED;
@@ -63,6 +62,7 @@ public class StandardTicketServiceImpl implements TicketService {
 
     /**
      * Method to create a new ticket of {@code numberOfLines} lenght
+     *
      * @param numberOfLines
      * @return
      */
@@ -121,6 +121,7 @@ public class StandardTicketServiceImpl implements TicketService {
 
     /**
      * Method to update a given ticket with {@code numberOfLines} new random lines.
+     *
      * @param id
      * @param numberOfLines
      * @return
@@ -131,7 +132,8 @@ public class StandardTicketServiceImpl implements TicketService {
 
         generatedLines = ticketUtil.generateRandomTicket(numberOfLines);
 
-        return updateTicket(id, generatedLines);    }
+        return updateTicket(id, generatedLines);
+    }
 
     /**
      * Method to check the results of a given ticket id.
@@ -195,13 +197,9 @@ public class StandardTicketServiceImpl implements TicketService {
         StandardTicket standardTicket = standardTicketRepository.findTicketById(id);
 
         if (null != standardTicket) {
-            if (standardTicket.getStatusChecked().equals(TICKET_CHECKED)){
-                logger.info("Returning final ticket {}", id);
-                return ResponseEntity.ok(ticketUtil.entityToResultResponseDto(standardTicket));
-            } else {
-                logger.info("Returning ticket {}", id);
-                return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
-            }
+            logger.info("Returning ticket {}", id);
+            return ResponseEntity.ok(ticketUtil.entityToResponse(standardTicket));
+
         } else {
             logger.info(COULD_NOT_FIND_TICKET_WITH_ID_LOG, id);
             return ResponseEntity.badRequest().body(UNABLE_TO_FIND_TICKET_WITH_ID + id);
