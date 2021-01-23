@@ -17,10 +17,8 @@ public class StandardTicket {
     @GeneratedValue
     @Column(name = "ID")
     private int id;
-
     @Column(name = "STATUS_CHECKED")
     private String statusChecked;
-
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StandardLine> lines;
 }
