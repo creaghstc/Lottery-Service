@@ -148,11 +148,17 @@ public class StandardTicketServiceImpl implements TicketService {
 
         if (null != standardTicket) {
 
-            standardTicket.setLines(ticketUtil.calculateTicketResults(standardTicket.getLines()));
-            standardTicket.setStatusChecked(TICKET_CHECKED);
-            standardTicketRepository.updateTicket(standardTicket);
+            TicketResultResponseDto response;
 
-            TicketResultResponseDto response = ticketUtil.entityToResultResponseDto(standardTicket);
+            if (standardTicket.getStatusChecked().equals(TICKET_CHECKED)) {
+                response = ticketUtil.entityToResultResponseDto(standardTicket);
+            } else {
+                standardTicket.setLines(ticketUtil.calculateTicketResults(standardTicket.getLines()));
+                standardTicket.setStatusChecked(TICKET_CHECKED);
+                standardTicketRepository.updateTicket(standardTicket);
+
+                response = ticketUtil.entityToResultResponseDto(standardTicket);
+            }
 
             logger.info("Returning checked ticket results {}", id);
             return ResponseEntity.ok(response);
