@@ -58,7 +58,11 @@ To view the database you can login to the H2 db console using the following url:
 
 Username and password can be set in the properties file.
 
-
+The main functionality of the application:
+- Create a lotto ticket of n lines, can be pre-supplied lines or random depending on the endpoint.
+- Amend an already created ticket with n lines, can be pre-supplied lines or random, depending on the endpoint used.
+- Find a ticket, returns a ticket and it's lines when supplied a valid ticket id.
+- Check the result of a ticket, returns a tickets lines with result for each line, as well as lines sorted into result groups.
 
 ## Running the tests
 
@@ -68,6 +72,7 @@ Tests can be run as part of the Maven build using:
 mvn clean test
 ```
 
+The tests cover basic functionality like creating updating and reading tickets.
 
 ## Versioning
 
