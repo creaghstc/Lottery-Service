@@ -94,7 +94,7 @@ class StandardTicketServiceImplTest {
 
         //Then
         assertEquals(2, updatedResponse.getLines().size());
-        assertEquals(newLine.getNumber_one(), updatedResponse.getLines().get(1).getNumber_one());
+        assertEquals(newLine.getNumberOne(), updatedResponse.getLines().get(1).getNumberOne());
 
     }
 
@@ -123,8 +123,8 @@ class StandardTicketServiceImplTest {
 
 
         //Then
-        int expectedNumberOne = lineDtoList.get(0).getNumber_one();
-        int actualNumberOne = getResponse.getLines().get(0).getNumber_one();
+        int expectedNumberOne = lineDtoList.get(0).getNumberOne();
+        int actualNumberOne = getResponse.getLines().get(0).getNumberOne();
 
         assertNotNull(getResponse);
         assertEquals(expectedNumberOne, actualNumberOne);

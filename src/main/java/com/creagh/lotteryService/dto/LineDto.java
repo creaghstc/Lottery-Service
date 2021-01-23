@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LineDto {
 
-    private int number_one;
-    private int number_two;
-    private int number_three;
+    private int numberOne;
+    private int numberTwo;
+    private int numberThree;
 
 }

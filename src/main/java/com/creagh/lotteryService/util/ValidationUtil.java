@@ -25,14 +25,14 @@ public class ValidationUtil {
 
         if (lines != null && !lines.isEmpty()) {
             for (LineDto line : lines) {
-                if (!VALID_NUMBERS.contains(line.getNumber_one())) {
-                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumber_one());
+                if (!VALID_NUMBERS.contains(line.getNumberOne())) {
+                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumberOne());
                     return false;
-                } else if (!VALID_NUMBERS.contains(line.getNumber_two())) {
-                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumber_two());
+                } else if (!VALID_NUMBERS.contains(line.getNumberTwo())) {
+                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumberTwo());
                     return false;
-                } else if (!VALID_NUMBERS.contains(line.getNumber_three())) {
-                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumber_three());
+                } else if (!VALID_NUMBERS.contains(line.getNumberThree())) {
+                    logger.info(INVALID_NUMBER_IN_LINE_LOG, line.getNumberThree());
                     return false;
                 }
             }

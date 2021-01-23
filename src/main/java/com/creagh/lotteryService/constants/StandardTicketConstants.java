@@ -3,6 +3,7 @@ package com.creagh.lotteryService.constants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class StandardTicketConstants {
 
@@ -18,5 +19,7 @@ public class StandardTicketConstants {
     public static final String RESULT_FIVE = "5";
     public static final String RESULT_ONE = "1";
     public static final String RESULT_ZERO = "0";
+
+    public static final Random numberGenerator = new Random();
 
 }

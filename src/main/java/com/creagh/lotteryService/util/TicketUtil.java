@@ -8,11 +8,8 @@ import com.creagh.lotteryService.entity.StandardLine;
 import com.creagh.lotteryService.entity.StandardTicket;
 import org.springframework.stereotype.Component;
 
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import static com.creagh.lotteryService.constants.StandardTicketConstants.*;
 
@@ -38,9 +35,9 @@ public class TicketUtil {
             standardLine = new StandardLine();
 
             standardLine.setTicket(standardTicket);
-            standardLine.setNumber_one(line.getNumber_one());
-            standardLine.setNumber_two(line.getNumber_two());
-            standardLine.setNumber_three(line.getNumber_three());
+            standardLine.setNumberOne(line.getNumberOne());
+            standardLine.setNumberTwo(line.getNumberTwo());
+            standardLine.setNumberThree(line.getNumberThree());
 
             standardLines.add(standardLine);
         }
@@ -66,9 +63,9 @@ public class TicketUtil {
         for (StandardLine line : ticket.getLines()) {
 
             lineDto = new LineDto(
-                    line.getNumber_one(),
-                    line.getNumber_two(),
-                    line.getNumber_three()
+                    line.getNumberOne(),
+                    line.getNumberTwo(),
+                    line.getNumberThree()
             );
 
             lineDtos.add(lineDto);
@@ -88,11 +85,11 @@ public class TicketUtil {
 
         for (StandardLine standardLine : lines) {
 
-            if (standardLine.getNumber_one() + standardLine.getNumber_two() + standardLine.getNumber_three() == TICKET_RESULT_CONDITION_TWO) {
+            if (standardLine.getNumberOne() + standardLine.getNumberTwo() + standardLine.getNumberThree() == TICKET_RESULT_CONDITION_TWO) {
                 standardLine.setResult(RESULT_TEN);
-            } else if (areEqual(standardLine.getNumber_one(), standardLine.getNumber_two(), standardLine.getNumber_three())) {
+            } else if (areEqual(standardLine.getNumberOne(), standardLine.getNumberTwo(), standardLine.getNumberThree())) {
                 standardLine.setResult(RESULT_FIVE);
-            } else if (standardLine.getNumber_one() != standardLine.getNumber_two() && standardLine.getNumber_one() != standardLine.getNumber_three()) {
+            } else if (standardLine.getNumberOne() != standardLine.getNumberTwo() && standardLine.getNumberOne() != standardLine.getNumberThree()) {
                 standardLine.setResult(RESULT_ONE);
             } else {
                 standardLine.setResult(RESULT_ZERO);
@@ -105,6 +102,7 @@ public class TicketUtil {
 
     /**
      * Converts entity to a final response object which has the lines grouped by outcome.
+     *
      * @param ticket
      * @return
      */
@@ -119,9 +117,9 @@ public class TicketUtil {
         for (StandardLine line : ticket.getLines()) {
 
             lineDto = new LineResultDto(
-                    line.getNumber_one(),
-                    line.getNumber_two(),
-                    line.getNumber_three(),
+                    line.getNumberOne(),
+                    line.getNumberTwo(),
+                    line.getNumberThree(),
                     line.getResult()
             );
 
@@ -139,6 +137,7 @@ public class TicketUtil {
 
     /**
      * Adds lines to the outcome groups
+     *
      * @param lineResultDtos
      * @param ticketResultResponseDto
      */
@@ -157,18 +156,17 @@ public class TicketUtil {
         }
     }
 
-    public List<LineDto> generateRandomTicket(int numberOfLines){
+    public List<LineDto> generateRandomTicket(int numberOfLines) {
 
         LineDto newLine;
         List<LineDto> generatedLines = new ArrayList<>();
 
-        Random numberGenerator = new Random();
 
-        while (generatedLines.size() < numberOfLines){
+        while (generatedLines.size() < numberOfLines) {
             newLine = new LineDto();
-            newLine.setNumber_one(numberGenerator.nextInt(UPPER_BOUND));
-            newLine.setNumber_two(numberGenerator.nextInt(UPPER_BOUND));
-            newLine.setNumber_three(numberGenerator.nextInt(UPPER_BOUND));
+            newLine.setNumberOne(numberGenerator.nextInt(UPPER_BOUND));
+            newLine.setNumberTwo(numberGenerator.nextInt(UPPER_BOUND));
+            newLine.setNumberThree(numberGenerator.nextInt(UPPER_BOUND));
 
             generatedLines.add(newLine);
         }

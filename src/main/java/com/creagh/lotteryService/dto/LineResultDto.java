@@ -9,9 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LineResultDto implements Comparable<LineResultDto> {
 
-    private int number_one;
-    private int number_two;
-    private int number_three;
+    private int numberOne;
+    private int numberTwo;
+    private int numberThree;
     private String result;
 
     @Override

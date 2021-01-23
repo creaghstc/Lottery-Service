@@ -23,18 +23,18 @@ public class StandardLine {
     private StandardTicket ticket;
 
     @Column(name = "NUMBER_ONE")
-    private int number_one;
+    private int numberOne;
     @Column(name = "NUMBER_TWO")
-    private int number_two;
+    private int numberTwo;
     @Column(name = "NUMBER_THREE")
-    private int number_three;
+    private int numberThree;
     @Column(name = "RESULT")
     private String result = "";
 
-    public StandardLine(int number_one, int number_two, int number_three) {
-        this.number_one = number_one;
-        this.number_two = number_two;
-        this.number_three = number_three;
+    public StandardLine(int numberOne, int numberTwo, int numberThree) {
+        this.numberOne = numberOne;
+        this.numberTwo = numberTwo;
+        this.numberThree = numberThree;
     }
 
 }
