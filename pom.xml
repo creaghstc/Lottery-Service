@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.creagh</groupId>
     <artifactId>lotteryService</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>lotteryService</name>
     <description>Lottery REST service</description>
@@ -90,5 +90,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
